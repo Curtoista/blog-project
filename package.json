@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "seed": "node -r dotenv/config ./scripts/seed.ts"
+    "seed": "ts-node -r dotenv/config ./scripts/seed.ts"
   },
   "dependencies": {
     "@heroicons/react": "^2.1.3",
