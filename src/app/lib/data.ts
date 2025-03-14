@@ -1,16 +1,15 @@
 import { Pool } from '@neondatabase/serverless';
 
 const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
+  connectionString: process.env.DATABASE_URL,
 });
 
-export async function connectToDB() {
-    try {
-        const client = await pool.connect();
-        console.log('Connected to database');
-        return client;  // Use this client for queries
-    } catch (error) {
-        console.error('Error connecting to database', error);
-        throw error;
-    }
+export async function queryDB(query: string, values?: any[]): Promise<any> {
+  try {
+    const result = await pool.query(query, values);
+    return result.rows;
+  } catch (error) {
+    console.error('Database query error:', error);
+    throw error;
+  }
 }
