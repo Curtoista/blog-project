@@ -1,4 +1,5 @@
 import { Pool } from '@neondatabase/serverless';
+import { sql } from '@vercel/postgres';
 
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
@@ -12,5 +13,15 @@ export async function connectToDB() {
     } catch (error) {
         console.error('Error connecting to database', error);
         throw error;
+    }
+}
+
+export async function  getPosts() {
+    try {
+        const data = await sql `SELECT * FROM posts LIMIT 10`
+        // console.log(data.rows)
+        return data.rows;
+    } catch (error) {
+        console.error('Error getting posts', error);
     }
 }
