@@ -16,12 +16,20 @@ export async function connectToDB() {
     }
 }
 
-export async function  getPosts() {
+export async function getPosts() {
     try {
-        const data = await sql `SELECT * FROM posts LIMIT 10`
-        // console.log(data.rows)
-        return data.rows;
+        const data = await sql`SELECT * FROM posts LIMIT 10`;
+
+        // Map and transform the fields to match the expected type
+        return data.rows.map((row) => ({
+            id: row.post_id?.toString() || row.id?.toString() || 'N/A',  // Ensure string ID
+            title: row.title || 'Untitled',
+            content: row.body || row.content || 'No content available',
+            date: row.created_at || row.date || new Date().toISOString()
+        }));
     } catch (error) {
         console.error('Error getting posts', error);
+        return [];
     }
 }
+
