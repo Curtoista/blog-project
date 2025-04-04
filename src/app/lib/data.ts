@@ -18,7 +18,7 @@ export async function connectToDB() {
 
 export async function getPosts() {
     try {
-        const data = await sql`SELECT * FROM posts LIMIT 10`;
+        const data = await sql`SELECT * FROM posts LIMIT 50`;
 
         // Map and transform the fields to match the expected type
         return data.rows.map((row) => ({
