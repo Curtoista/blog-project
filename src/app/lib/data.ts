@@ -1,5 +1,6 @@
 import { Pool } from '@neondatabase/serverless';
 import { sql } from '@vercel/postgres';
+import { unstable_noStore as noStore } from 'next/cache';
 
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
@@ -18,7 +19,9 @@ export async function connectToDB() {
 
 export async function getPosts() {
     try {
-        const data = await sql`SELECT * FROM posts LIMIT 50`;
+        noStore();
+        const data = await sql`SELECT * FROM posts`;
+        console.log(data.rows)
 
         // Map and transform the fields to match the expected type
         return data.rows.map((row) => ({
