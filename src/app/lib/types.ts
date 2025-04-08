@@ -6,3 +6,8 @@ export type PostType = {
     date: string;
   };
   
+  export type UserType = {
+    name: string | undefined | null;
+    email: string;
+    image: string;
+  }
