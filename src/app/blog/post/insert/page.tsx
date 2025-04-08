@@ -46,9 +46,19 @@ export default function Page() {
 
   useEffect(() => {
     getSession().then((session) => {
-      setUser(session?.user || null);
-    })
+      const user = session?.user;
+      if (user?.email && user?.image) {
+        setUser({
+          name: user.name ?? null,
+          email: user.email,
+          image: user.image,
+        });
+      } else {
+        setUser(null); // fallback if something is missing
+      }
+    });
   }, []);
+  
 
   return (
     <div className="bg-white p-8 rounded shadow">
